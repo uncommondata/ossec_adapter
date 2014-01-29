@@ -7,6 +7,7 @@
         <item url="file://$PROJECT_DIR$/extractors/user_extractor.js" />
         <item url="file://$PROJECT_DIR$/extractors/ossec_alert_attributes_extractor.js" />
         <item url="file://$PROJECT_DIR$/ossec_adapter.js" />
+        <item url="file://$PROJECT_DIR$/extractors/get_meta.js" />
         <item url="file://$PROJECT_DIR$/get_meta.js" />
       </sourceFilesUrls>
     </properties>
@@ -17,10 +18,12 @@
       <root url="file://$PROJECT_DIR$/variable_extractor.js" />
       <root url="file://$PROJECT_DIR$/user_extractor.js" />
       <root url="file://$PROJECT_DIR$/ossec_alert_attributes_extractor.js" />
+      <root url="file://$PROJECT_DIR$/get_meta.js" />
       <root url="file://$PROJECT_DIR$/process_ossec_alert.js" />
       <root url="file://$PROJECT_DIR$/extractors/variable_extractor.js" />
       <root url="file://$PROJECT_DIR$/extractors/user_extractor.js" />
       <root url="file://$PROJECT_DIR$/extractors/ossec_alert_attributes_extractor.js" />
+      <root url="file://$PROJECT_DIR$/extractors/get_meta.js" />
       <root url="file://$PROJECT_DIR$/ossec_adapter.js" />
       <root url="file://$PROJECT_DIR$/get_meta.js" />
     </CLASSES>

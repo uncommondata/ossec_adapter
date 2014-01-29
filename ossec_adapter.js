@@ -68,7 +68,7 @@
 
   o = new OssecClient();
 
-  o.readStdIn();
+  o.readSyslogFile(process.argv[2]);
 
 }).call(this);
 

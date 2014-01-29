@@ -33,5 +33,5 @@ class ClientSocket
     console.log("Establishing websocket connection... ") if debug
 
 o = new OssecClient()
-#o.readSyslogFile(process.argv[2])
-o.readStdIn()
+o.readSyslogFile(process.argv[2])
+#o.readStdIn()
