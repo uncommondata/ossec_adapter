@@ -1,7 +1,7 @@
 EventBuilder = require('./event_builder')
-OssecAlertAttributesExtractor = require('./ossec_alert_attributes_extractor')
-VariableExtractor = require('./variable_extractor')
-UserExtractor = require('./user_extractor')
+OssecAlertAttributesExtractor = require('./extractor/ossec_alert_attributes_extractor')
+VariableExtractor = require('./extractors/variable_extractor')
+UserExtractor = require('./extractors/user_extractor')
 GetMeta = require('./get_meta')
 
 class ProcessOssecAlert
