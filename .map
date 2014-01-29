@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": ".js",
+  "sourceRoot": "",
+  "sources": [
+    "process_ossec_alerts"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,oCAAA;;CAAA,CAAA,CAAe,EAAf,EAAe,CAAA,IAAf;;CAAA,CACA,CAAQ,EAAR,EAAe,EAAP;;CADR,CAEA,GAAK,CAAL,KAAA;;CAFA,CAIA,CAAiB,EAAZ,CAAL,GAAkB,SAAD;CAA8C,UAAtB,OAAA,GAAA;CAAzC,EAAiB;;CAJjB,CAKA,CAAwB,MAAC,SAAD,GAAxB;CACE,OAAA,IAAA;CAA4B,EAAb,EAAA,MAAf,CAAA,MAAe;CANjB,EAKwB;CALxB"
+}

@@ -1,0 +1,1 @@
+Jan 15 23:17:20 bystander ossec: { "crit": 3, "id": 502, "description": "Ossec server started.", "component": "bystander->ossec-monitord", "classification": " ossec,", "message": "ossec: Ossec started." }
