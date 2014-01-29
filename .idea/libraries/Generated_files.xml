@@ -2,26 +2,19 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/ossec_alert_attributes_extractor.js" />
-        <item url="file://$PROJECT_DIR$/get_meta.js" />
         <item url="file://$PROJECT_DIR$/variable_extractor.js" />
-        <item url="file://$PROJECT_DIR$/ossec_client.js" />
-        <item url="file://$PROJECT_DIR$/event_builder.js" />
         <item url="file://$PROJECT_DIR$/user_extractor.js" />
-        <item url="file://$PROJECT_DIR$/process_ossec_alert.js" />
+        <item url="file://$PROJECT_DIR$/ossec_alert_attributes_extractor.js" />
+        <item url="file://$PROJECT_DIR$/ossec_client.js" />
+        <item url="file://$PROJECT_DIR$/get_meta.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/book.js" />
-      <root url="file://$PROJECT_DIR$/host_lookup.js" />
-      <root url="file://$PROJECT_DIR$/host_lookup.js" />
-      <root url="file://$PROJECT_DIR$/ossec_alert_attributes_extractor.js" />
       <root url="file://$PROJECT_DIR$/variable_extractor.js" />
-      <root url="file://$PROJECT_DIR$/get_meta.js" />
-      <root url="file://$PROJECT_DIR$/ossec_client.js" />
-      <root url="file://$PROJECT_DIR$/event_builder.js" />
       <root url="file://$PROJECT_DIR$/user_extractor.js" />
-      <root url="file://$PROJECT_DIR$/process_ossec_alert.js" />
+      <root url="file://$PROJECT_DIR$/ossec_alert_attributes_extractor.js" />
+      <root url="file://$PROJECT_DIR$/ossec_adapter.js" />
+      <root url="file://$PROJECT_DIR$/get_meta.js" />
     </CLASSES>
     <SOURCES />
   </library>
