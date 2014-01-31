@@ -4,7 +4,7 @@ class EventBuilder
       "account": defaultParameters.account or undefined,
       "event": {
         "device": { }
-        "user": { [ ] }
+        "user": { }
         "payload": { }
       }
     }
