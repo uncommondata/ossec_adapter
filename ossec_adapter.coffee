@@ -1,5 +1,5 @@
 optimist = require 'optimist'
-WebSocket = require('ws')
+io = require('socket.io-client')
 fs = require('fs')
 ProcessOssecAlert = require('./process_ossec_alert')
 
@@ -8,6 +8,7 @@ root.debug = false
 
 class OssecClient
   run: ->
+    #@io = new ClientSocket()
     optimist.usage 'Uncommon Data OSSEC Adapter'
     optimist.options 'f',
       describe : 'Syslog file containing OSSEC JSON alerts'
@@ -26,7 +27,6 @@ class OssecClient
       console.log optimist.help()
 
   readFromStdIn: ->
-#    @ws = new ClientSocket
     stdin = process.openStdin()
     stdin.setEncoding 'utf8'
     stdin.on 'data', (ossec_syslog_alert) ->
@@ -47,8 +47,12 @@ class OssecClient
 
 class ClientSocket
   constructor: ->
+    console.log("Establishing socket.io connection... ") if debug
     config = { key: "c07626c85eb3c13205b32005df582dbd", host: "uncommondata.herokuapp.com", port: 80 }
-    new WebSocket("ws://#{config.host}:#{config.port}")
-    console.log("Establishing websocket connection... ") if debug
+    @socket = io.connect("http://#{config.host}:#{config.port}")
+
+  emit: (event) ->
+    console.log(event) if debug
+    @socket.emit('message', event)
 
 new OssecClient().run()
