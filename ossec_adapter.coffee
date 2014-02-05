@@ -1,3 +1,4 @@
+optimist = require 'optimist'
 WebSocket = require('ws')
 fs = require('fs')
 ProcessOssecAlert = require('./process_ossec_alert')
@@ -6,7 +7,25 @@ root = global
 root.debug = false
 
 class OssecClient
-  readStdIn: ->
+  run: ->
+    optimist.usage 'Uncommon Data OSSEC Adapter'
+    optimist.options 'f',
+      describe : 'Syslog file containing OSSEC JSON alerts'
+      default : process.argv.f
+    optimist.options 's',
+      describe : 'Read from STDIN (expecting Syslog file w/OSSEC JSON alerts)'
+    optimist.options 'h',
+      describe : 'Show this message'
+    argv = optimist.argv
+
+    if argv.f
+      @readFromSyslogFile(argv.f)
+    else if argv.s
+      @readFromStdIn()
+    else
+      console.log optimist.help()
+
+  readFromStdIn: ->
 #    @ws = new ClientSocket
     stdin = process.openStdin()
     stdin.setEncoding 'utf8'
@@ -15,7 +34,7 @@ class OssecClient
       @processAlert.run()
 
   # taken from stackoverflow
-  readSyslogFile: (filePath) ->
+  readFromSyslogFile: (filePath) ->
     stream = fs.createReadStream(filePath, 'utf8')
     last = ""
     stream.on('data', (chunk) ->
@@ -32,6 +51,4 @@ class ClientSocket
     new WebSocket("ws://#{config.host}:#{config.port}")
     console.log("Establishing websocket connection... ") if debug
 
-o = new OssecClient()
-o.readSyslogFile(process.argv[2])
-#o.readStdIn()
+new OssecClient().run()
