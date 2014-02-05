@@ -14,7 +14,7 @@ class ProcessOssecAlert
     if @ossec_alert?
       @process()
       @updateEvent()
-      @uploadEvent()
+      @event.event
     else
       console.log("Not an OSSEC alert?: " + @ossec_syslog_alert) if debug
 
@@ -53,9 +53,6 @@ class ProcessOssecAlert
     @event.updateEvent(emails: @variables.emails)
     @event.updateEvent(ipAddrs: @variables.ipAddrs)
     @event.updateEvent(users: @users)
-
-  uploadEvent: ->
-    console.log(@event)
 
 module.exports = ProcessOssecAlert
 
