@@ -3,8 +3,21 @@
   "description": "OSSEC adapter for uncommondata security dashboard",
   "version": "0.0.1",
   "private": true,
+  "main": "lib/ossec_adapter.js",
   "dependencies": {
     "optimist": "~0.6.0",
     "socket.io-client": "~0.9.16"
   }
+
+  "contributors": [
+    {
+      "name": "Tate Hansen",
+      "email": "tate@clearnetsec.com",
+      "url": "http://www.clearnetsec.com/"
+    },
+    {
+      "name": "CJ Grimes",
+      "email": "cjgrimes@gmail.com"
+    }
+  ],
 }
