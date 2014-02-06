@@ -70,9 +70,9 @@
       });
     };
 
-    OssecClient.prototype.processLine = function(line) {
+    OssecClient.prototype.processLine = function(logLine) {
       var event;
-      this.processAlert = new ProcessOssecAlert(line);
+      this.processAlert = new ProcessOssecAlert(logLine);
       event = this.processAlert.run();
       return this.io.emit(event);
     };

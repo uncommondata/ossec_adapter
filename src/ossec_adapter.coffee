@@ -41,8 +41,8 @@ class OssecClient
       [lines...,last] = lines
       @processLine(logLine) for logLine in lines
 
-  processLine: (line) ->
-    @processAlert = new ProcessOssecAlert(line)
+  processLine: (logLine) ->
+    @processAlert = new ProcessOssecAlert(logLine)
     event = @processAlert.run()
     @io.emit(event)
 
