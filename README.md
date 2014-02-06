@@ -1,4 +1,4 @@
 To parse a syslog file containing OSSEC alerts, do:
 
-> coffee ./src/ossec_adapter.coffee -f _syslogFile_
+> node ./lib/ossec_adapter.js -f _syslogFile_
 
