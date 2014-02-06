@@ -22,7 +22,9 @@
         parameters = {};
       }
       console.log(parameters);
-      this.event.timestamp = new Date(parameters.date) || new Date;
+      if (parameters.timeStamp) {
+        this.event.timestamp = parameters.timeStamp;
+      }
       if (parameters.description) {
         this.event.name = parameters.description;
       }
@@ -125,3 +127,7 @@
   module.exports = EventBuilder;
 
 }).call(this);
+
+/*
+//@ sourceMappingURL=event_builder.map
+*/

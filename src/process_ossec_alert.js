@@ -13,42 +13,45 @@
   GetMeta = require('./extractors/get_meta');
 
   ProcessOssecAlert = (function() {
-    function ProcessOssecAlert(ossec_syslog_alert) {
-      this.ossec_syslog_alert = ossec_syslog_alert;
+    function ProcessOssecAlert(ossecSyslogAlert) {
+      this.ossecSyslogAlert = ossecSyslogAlert;
       if (debug) {
-        console.log("Found OSSEC alert: " + this.ossec_syslog_alert);
+        console.log("Found OSSEC alert: " + this.ossecSyslogAlert);
       }
       this.event = new EventBuilder();
     }
 
     ProcessOssecAlert.prototype.run = function() {
       this.extractJsonBlock();
-      if (this.ossec_alert != null) {
+      if (this.ossecAlert != null) {
         this.process();
         this.updateEvent();
         return this.event.event;
       } else {
         if (debug) {
-          return console.log("Not an OSSEC alert?: " + this.ossec_syslog_alert);
+          return console.log("Log line does not contain an OSSEC alert?: " + this.ossecSyslogAlert);
         }
       }
     };
 
     ProcessOssecAlert.prototype.extractJsonBlock = function() {
       var match, ossecJsonPattern;
-      ossecJsonPattern = /\bossec:\s(\{\s\"crit\"\:\s\d{1,2}\,\s\"id\"\:\s\d+.*\})/;
-      match = this.ossec_syslog_alert.match(ossecJsonPattern);
+      ossecJsonPattern = /([A-Z][a-z]{2}\s\d{1,2}\s\d{2}:\d{2}:\d{2}).*ossec:\s({\s\"crit\"\:\s\d{1,2}\,\s\"id\"\:\s\d+.*\})/;
+      match = this.ossecSyslogAlert.match(ossecJsonPattern);
       if (match) {
-        return this.ossec_alert = JSON.parse(match[1]);
+        this.timeStamp = match[1];
+      }
+      if (match) {
+        return this.ossecAlert = JSON.parse(match[2]);
       }
     };
 
     ProcessOssecAlert.prototype.process = function() {
-      this.attributesExtractor = new OssecAlertAttributesExtractor(this.ossec_alert, this.event);
+      this.attributesExtractor = new OssecAlertAttributesExtractor(this.logHeader, this.ossecAlert, this.event);
       this.attributes = this.attributesExtractor.run();
-      this.variableExtractor = new VariableExtractor(this.ossec_alert, this.event);
+      this.variableExtractor = new VariableExtractor(this.ossecAlert, this.event);
       this.variables = this.variableExtractor.run();
-      this.userExtractor = new UserExtractor(this.ossec_alert, this.event);
+      this.userExtractor = new UserExtractor(this.ossecAlert, this.event);
       return this.users = this.userExtractor.run();
     };
 
@@ -113,8 +116,11 @@
       this.event.updateEvent({
         ipAddrs: this.variables.ipAddrs
       });
-      return this.event.updateEvent({
+      this.event.updateEvent({
         users: this.users
+      });
+      return this.event.updateEvent({
+        timestamp: this.timeStamp
       });
     };
 
@@ -125,3 +131,7 @@
   module.exports = ProcessOssecAlert;
 
 }).call(this);
+
+/*
+//@ sourceMappingURL=process_ossec_alert.map
+*/

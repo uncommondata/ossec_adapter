@@ -5,30 +5,31 @@ UserExtractor = require('./extractors/user_extractor')
 GetMeta = require('./extractors/get_meta')
 
 class ProcessOssecAlert
-  constructor: (@ossec_syslog_alert) ->
-    console.log("Found OSSEC alert: " + @ossec_syslog_alert) if debug
+  constructor: (@ossecSyslogAlert) ->
+    console.log("Found OSSEC alert: " + @ossecSyslogAlert) if debug
     @event = new EventBuilder()
 
   run: ->
     @extractJsonBlock()
-    if @ossec_alert?
+    if @ossecAlert?
       @process()
       @updateEvent()
       @event.event
     else
-      console.log("Not an OSSEC alert?: " + @ossec_syslog_alert) if debug
+      console.log("Log line does not contain an OSSEC alert?: " + @ossecSyslogAlert) if debug
 
   extractJsonBlock: ->
-    ossecJsonPattern = /\bossec:\s(\{\s\"crit\"\:\s\d{1,2}\,\s\"id\"\:\s\d+.*\})/
-    match = @ossec_syslog_alert.match ossecJsonPattern
-    @ossec_alert = JSON.parse(match[1]) if match
+    ossecJsonPattern = /([A-Z][a-z]{2}\s\d{1,2}\s\d{2}:\d{2}:\d{2}).*ossec:\s({\s\"crit\"\:\s\d{1,2}\,\s\"id\"\:\s\d+.*\})/
+    match = @ossecSyslogAlert.match ossecJsonPattern
+    @timeStamp = match[1] if match
+    @ossecAlert = JSON.parse(match[2]) if match
 
   process: ->
-    @attributesExtractor = new OssecAlertAttributesExtractor(@ossec_alert, @event)
+    @attributesExtractor = new OssecAlertAttributesExtractor(@logHeader, @ossecAlert, @event)
     @attributes = @attributesExtractor.run()
-    @variableExtractor = new VariableExtractor(@ossec_alert, @event)
+    @variableExtractor = new VariableExtractor(@ossecAlert, @event)
     @variables = @variableExtractor.run()
-    @userExtractor = new UserExtractor(@ossec_alert, @event)
+    @userExtractor = new UserExtractor(@ossecAlert, @event)
     @users = @userExtractor.run()
 
   updateEvent: ->
@@ -53,6 +54,7 @@ class ProcessOssecAlert
     @event.updateEvent(emails: @variables.emails)
     @event.updateEvent(ipAddrs: @variables.ipAddrs)
     @event.updateEvent(users: @users)
+    @event.updateEvent(timestamp: @timeStamp)
 
 module.exports = ProcessOssecAlert
 

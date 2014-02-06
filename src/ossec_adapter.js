@@ -114,3 +114,7 @@
   new OssecClient().run();
 
 }).call(this);
+
+/*
+//@ sourceMappingURL=ossec_adapter.map
+*/

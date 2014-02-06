@@ -6,9 +6,9 @@
   "main": "lib/ossec_adapter.js",
   "dependencies": {
     "optimist": "~0.6.0",
-    "socket.io-client": "~0.9.16"
-  }
-
+    "socket.io-client": "~0.9.16",
+    "moment": "latest"
+  },
   "contributors": [
     {
       "name": "Tate Hansen",
@@ -19,5 +19,5 @@
       "name": "CJ Grimes",
       "email": "cjgrimes@gmail.com"
     }
-  ],
+  ]
 }
