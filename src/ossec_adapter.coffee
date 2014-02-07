@@ -50,13 +50,25 @@ class ClientSocket
   constructor: ->
     console.log("Establishing socket.io connection... ") if debug
     #config = { key: "c07626c85eb3c13205b32005df582dbd", host: "uncommondata.herokuapp.com", port: 80 }
-    config = {key: "", host: "localhost", port: 5000}
+    config = {key: "56dd2065956030fe1c6016dc04917ded", host: "localhost", port: 5000}
     url = "http://#{config.host}:#{config.port}"
+    @ready = false
     @socket = io.connect(url)
+    @socket.on "connect", =>
+      console.log "connection established"
+      @socket.emit "identify", config.key, (response) =>
+        if response == "ok"
+          console.log "identity verified"
+          @ready = true
+        else
+          console.log "error, invalid api key"
 
   emit: (event) ->
-    console.log "emit..."
-    console.log(event) if debug
-    @socket.emit('message', [event])
+    if @ready
+      console.log "emit..."
+      console.log(event) if debug
+      @socket.emit('message', [event])
+    else
+      console.log "error: not ready; TODO - implement buffering..."
 
 new OssecClient().run()

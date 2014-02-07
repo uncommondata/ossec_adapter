@@ -10,7 +10,8 @@ class EventBuilder
     }
 
   updateEvent: (parameters={ }) ->
-    console.log(parameters)
+    console.log(parameters) if global.debug
+
     # Event values
     @event.timestamp = parameters.timeStamp if parameters.timeStamp
     @event.name = parameters.description if parameters.description
