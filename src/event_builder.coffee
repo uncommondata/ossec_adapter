@@ -12,7 +12,7 @@ class EventBuilder
   updateEvent: (parameters={ }) ->
     console.log(parameters)
     # Event values
-    @event.timestamp = new Date(parameters.date) or new Date
+    @event.timestamp = parameters.timeStamp if parameters.timeStamp
     @event.name = parameters.description if parameters.description
     @event.event.severity = parameters.severity if parameters.severity
 
