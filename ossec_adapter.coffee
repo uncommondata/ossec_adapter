@@ -52,7 +52,6 @@ class ClientSocket
     #config = { key: "c07626c85eb3c13205b32005df582dbd", host: "uncommondata.herokuapp.com", port: 80 }
     config = {key: "", host: "localhost", port: 5000}
     url = "http://#{config.host}:#{config.port}"
-    console.log url if debug
     @socket = io.connect(url)
 
   emit: (event) ->
