@@ -10,6 +10,7 @@ lib-cov
 *.iws
 parser.output
 test/*.js
+src/*.js
 .idea/workspace.xml
 .idea/tasks.xml
 pids
