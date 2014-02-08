@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/moment/foo.js" />
+        <item url="file://$PROJECT_DIR$/src/process_ossec_alert.js" />
         <item url="file://$PROJECT_DIR$/src/event_builder.js" />
         <item url="file://$PROJECT_DIR$/src/ossec_adapter.js" />
       </sourceFilesUrls>
@@ -37,8 +38,8 @@
       <root url="file://$PROJECT_DIR$/src/extractors/get_meta.js" />
       <root url="file://$PROJECT_DIR$/src/extractors/variable_extractor.js" />
       <root url="file://$PROJECT_DIR$/src/extractors/ossec_alert_attributes_extractor.js" />
-      <root url="file://$PROJECT_DIR$/src/process_ossec_alert.js" />
       <root url="file://$PROJECT_DIR$/node_modules/moment/foo.js" />
+      <root url="file://$PROJECT_DIR$/src/process_ossec_alert.js" />
       <root url="file://$PROJECT_DIR$/src/event_builder.js" />
       <root url="file://$PROJECT_DIR$/src/ossec_adapter.js" />
     </CLASSES>

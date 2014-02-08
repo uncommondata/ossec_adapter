@@ -17,6 +17,7 @@ class ProcessOssecAlert
       @event.event
     else
       console.log("Log line does not contain an OSSEC alert?: " + @ossecSyslogAlert) if debug
+      return false
 
   extractJsonBlock: ->
     ossecJsonPattern = /([A-Z][a-z]{2}\s\d{1,2}\s\d{2}:\d{2}:\d{2}).*ossec:\s({\s\"crit\"\:\s\d{1,2}\,\s\"id\"\:\s\d+.*\})/

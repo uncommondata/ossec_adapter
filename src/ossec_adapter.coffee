@@ -47,10 +47,12 @@ class OssecClient
   processLine: (logLine) ->
     @processAlert = new ProcessOssecAlert(logLine)
     event = @processAlert.run()
-    @io.emit(event)
+    if event
+      @io.emit(event)
 
 class ClientSocket
   constructor: ->
+    @buffer = []
     console.log("Establishing socket.io connection... ") if debug
     #config = { key: "c07626c85eb3c13205b32005df582dbd", host: "uncommondata.herokuapp.com", port: 80 }
     config = {key: "56dd2065956030fe1c6016dc04917ded", host: "localhost", port: 5000}
@@ -71,7 +73,10 @@ class ClientSocket
       console.log "emit..."
       console.log(event) if debug
       @socket.emit('message', [event])
+      while @buffer.length > 0
+        @socket.emit('message', [@buffer.pop])
     else
-      console.log "error: not ready; TODO - implement buffering..."
+      @buffer.push event
+      console.log ("error: socket not ready, adding event to buffer, total buffered = " + @buffer.length)
 
 new OssecClient().run()
