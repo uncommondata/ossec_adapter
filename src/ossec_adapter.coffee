@@ -11,12 +11,15 @@ class OssecClient
     @io = new ClientSocket()
     optimist.usage 'Uncommon Data OSSEC Adapter'
     optimist.options 'f',
-      describe : 'Syslog file containing OSSEC JSON alerts'
-      default : process.argv.f
+      alias: "file"
+      describe: 'Syslog file containing OSSEC JSON alerts'
+      default: process.argv.f
     optimist.options 's',
-      describe : 'Read from STDIN (expecting Syslog file w/OSSEC JSON alerts)'
+      alias: "STDIN"
+      describe: 'Read from STDIN (expecting Syslog file w/OSSEC JSON alerts)'
     optimist.options 'h',
-      describe : 'Show this message'
+      alias: "help"
+      describe: 'Show this message'
     argv = optimist.argv
 
     if argv.f
