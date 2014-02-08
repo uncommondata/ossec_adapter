@@ -59,6 +59,7 @@ class ClientSocket
     url = "http://#{config.host}:#{config.port}"
     @ready = false
     @socket = io.connect(url)
+    
     @socket.on "connect", =>
       console.log "connection established"
       @socket.emit "identify", config.key, (response) =>
@@ -67,6 +68,9 @@ class ClientSocket
           @ready = true
         else
           console.log "error, invalid api key"
+
+    @socket.on "disconnect", =>
+      @ready = false
 
   emit: (event) ->
     if @ready
