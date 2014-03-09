@@ -182,3 +182,7 @@
   module.exports = OssecJsonAlertAttributesExtractor;
 
 }).call(this);
+
+/*
+//@ sourceMappingURL=ossec_json_alert_attributes_extractor.map
+*/

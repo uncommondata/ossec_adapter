@@ -1,6 +1,6 @@
 moment = require('moment')
 
-class OssecAlertAttributesExtractor
+class OssecJsonAlertAttributesExtractor
   constructor: (@timeStamp, @ossecAlert, @event) ->
     @attributes = { }
     @parsingMethods = [ @sourceIp(), @sourcePort(), @destinationIp(), @destinationPort(), @severity(), @ruleId(), @description(),
@@ -103,4 +103,4 @@ class OssecAlertAttributesExtractor
     @attributes["user"] = @user
     console.log("User: " + @user) if debug
 
-module.exports = OssecAlertAttributesExtractor
+module.exports = OssecJsonAlertAttributesExtractor

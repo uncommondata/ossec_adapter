@@ -1,7 +1,7 @@
 optimist = require 'optimist'
 io = require('socket.io-client')
 fs = require('fs')
-ProcessOssecAlert = require('./process_ossec_alert')
+ProcessOssecJsonAlert = require('./parsers/process_ossec_json_alert')
 
 root = global
 root.debug = true
@@ -10,6 +10,10 @@ class OssecClient
   run: ->
     @io = new ClientSocket()
     optimist.usage 'Uncommon Data OSSEC Adapter'
+    optimist.options 'a',
+      alias: "alerts"
+      describe: 'Read OSSEC alert.log file (expecting default format)'
+      default: process.argv.f
     optimist.options 'f',
       alias: "file"
       describe: 'Syslog file containing OSSEC JSON alerts'
@@ -26,6 +30,8 @@ class OssecClient
       @readFromSyslogFile(argv.f)
     else if argv.s
       @readFromStdIn()
+    else if argv.a
+      @readFromAlertsFile(argv.a)
     else
       console.log optimist.help()
 
@@ -33,20 +39,27 @@ class OssecClient
     stdin = process.openStdin()
     stdin.setEncoding 'utf8'
     stdin.on 'data', (ossec_syslog_alert) =>
-      @processLine ossec_syslog_alert
+      @processLine(ossec_syslog_alert,"syslog")
 
-  # taken from stackoverflow
+  # next snippet from stackoverflow
   readFromSyslogFile: (filePath) ->
     stream = fs.createReadStream(filePath, 'utf8')
     last = ""
     stream.on 'data', (chunk) =>
       lines = (last + chunk).replace(/\\\|/g,'').split("\n")
       [lines...,last] = lines
-      @processLine(logLine) for logLine in lines
+      @processLine(logLine,"syslog") for logLine in lines
 
-  processLine: (logLine) ->
-    @processAlert = new ProcessOssecAlert(logLine)
-    event = @processAlert.run()
+  readFromAlertsFile: (filePath) ->
+    #for line in fs.readFileSync(filePath)
+
+  processLine: (logLine, format) ->
+    if format == "syslog"
+      @processAlert = new ProcessOssecJsonAlert(logLine)
+      event = @processAlert.run()
+    else if format == "ossec"
+      @processAlert = new ProcessOssecAlertLog(logLine)
+      event = @processAlert.run()
     if event
       @io.emit(event)
 
@@ -59,7 +72,7 @@ class ClientSocket
     url = "http://#{config.host}:#{config.port}"
     @ready = false
     @socket = io.connect(url)
-    
+
     @socket.on "connect", =>
       console.log "connection established"
       @socket.emit "identify", config.key, (response) =>
@@ -81,6 +94,6 @@ class ClientSocket
         @socket.emit('message', [@buffer.pop])
     else
       @buffer.push event
-      console.log ("error: socket not ready, adding event to buffer, total buffered = " + @buffer.length)
+      console.log ("error: socket not ready, adding event to buffer, total # buffered alerts = " + @buffer.length)
 
 new OssecClient().run()

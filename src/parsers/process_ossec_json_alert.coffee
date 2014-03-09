@@ -1,10 +1,10 @@
-EventBuilder = require('./event_builder')
-OssecAlertAttributesExtractor = require('./extractors/ossec_alert_attributes_extractor')
-VariableExtractor = require('./extractors/variable_extractor')
-UserExtractor = require('./extractors/user_extractor')
-GetMeta = require('./extractors/get_meta')
+EventBuilder = require('./../event_builder')
+OssecJsonAlertAttributesExtractor = require('./../extractors/ossec_json_alert_attributes_extractor')
+VariableExtractor = require('./../extractors/variable_extractor')
+UserExtractor = require('./../extractors/user_extractor')
+GetMeta = require('./../extractors/get_meta')
 
-class ProcessOssecAlert
+class ProcessOssecJsonAlert
   constructor: (@ossecSyslogAlert) ->
     console.log("Found OSSEC alert: " + @ossecSyslogAlert) if debug
     @event = new EventBuilder()
@@ -26,7 +26,7 @@ class ProcessOssecAlert
     @ossecAlert = JSON.parse(match[2]) if match
 
   process: ->
-    @attributesExtractor = new OssecAlertAttributesExtractor(@logHeader, @ossecAlert, @event)
+    @attributesExtractor = new OssecJsonAlertAttributesExtractor(@logHeader, @ossecAlert, @event)
     @attributes = @attributesExtractor.run()
     @variableExtractor = new VariableExtractor(@ossecAlert, @event)
     @variables = @variableExtractor.run()
@@ -57,7 +57,7 @@ class ProcessOssecAlert
     @event.updateEvent(users: @users)
     @event.updateEvent(timestamp: @timeStamp)
 
-module.exports = ProcessOssecAlert
+module.exports = ProcessOssecJsonAlert
 
 
 
